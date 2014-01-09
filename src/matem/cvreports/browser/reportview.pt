@@ -40,9 +40,9 @@
       <div class="field">
         <label>Sede</label><br>
         <select multiple="multiple" seize="5" name="sede" id="sede">
-          <option value="df">D.F.</option>
+          <option value="df">C.U.</option>
           <option value="matcuer">Cuernavaca</option>
-          <option value="matmor">Morelia</option>
+          <option value="matmor">Juriquilla</option>
         </select>
       </div>
 
@@ -81,7 +81,7 @@
 				</div>
 			</fieldset>
 			<div class="formControls">
-			  <input class="context" type="submit" value="Vista con formato" name="form.button.formato"/>
+			  <!-- <input class="context" type="submit" value="Vista con formato" name="form.button.formato"/> -->
 			  <input class="context" type="submit" value="Consulta en tabla" name="form.button.tabular"/>
 			</div>
 
