@@ -42,7 +42,7 @@
         <select multiple="multiple" seize="5" name="sede" id="sede">
           <option value="df">C.U.</option>
           <option value="matcuer">Cuernavaca</option>
-          <option value="matmor">Juriquilla</option>
+          <option value="matjuriquilla">Juriquilla</option>
         </select>
       </div>
 

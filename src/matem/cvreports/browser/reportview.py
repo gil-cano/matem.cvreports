@@ -186,7 +186,7 @@ class ReportView(BrowserView):
                 sede = [sede]
         except:
             # if no sede selected all must be reported
-            sede = ['df', 'matcuer', 'matmor']
+            sede = ['df', 'matcuer', 'matjuriquilla']
 
         # esta no es la mejor manera de agregar el reporte de revistas
         # debemos encontrar una mejor manera de hacerlo
@@ -259,6 +259,10 @@ class ReportView(BrowserView):
                         row.append(brains[0].getObject().sede)
                     else:
                         row.append('')
+
+                elif i =='publicationType' or i =='isnational' or i =='modality' or i=='assist':
+                    value = obj.getField(i).Vocabulary().getValue(obj.getField(i).get(obj))
+                    row.append(value)
                 else:
                     row.append(obj.getField(i).get(obj))
             data.append((obj.absolute_url(), row))
@@ -303,14 +307,15 @@ class ReportView(BrowserView):
                 objects.append(obj)
         return objects
 
+    #('C.U.', 'Cuernavaca', 'Juriquilla', 'Morelia'),
     def usersBySede(self, ids):
         brains = self.portal_catalog(portal_type='FSDPerson', id=ids)
-        users ={'df': [], 'matcuer': [], 'matmor': []}
+        users ={'df': [], 'matcuer': [], 'matjuriquilla': []}
         for brain in brains:
-            if 'CU' in brain.getClassificationNames:
+            if 'C.U.' in brain.getClassificationNames:
                 users['df'].append(brain.id)
             elif 'Cuernavaca' in brain.getClassificationNames:
                 users['matcuer'].append(brain.id)
-            elif 'Morelia' in brain.getClassificationNames:
-                users['matmor'].append(brain.id)
+            elif 'Juriquilla' in brain.getClassificationNames:
+                users['matjuriquilla'].append(brain.id)
         return users
