@@ -5,7 +5,9 @@ from zope.schema.vocabulary import SimpleVocabulary
 from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes import atapi
-from UNAM.imateCVct.interfaces.interfaces import ICVBaseActivity
+#from UNAM.imateCVct.interfaces.interfaces import ICVBaseActivity
+from UNAM.imateCVct.interfaces.interfaces import ICVIndividualAct
+from UNAM.imateCVct.interfaces.interfaces import ICVPublication
 
 
 class CVContentTypesVocabulary(object):
@@ -25,9 +27,12 @@ class CVContentTypesVocabulary(object):
 			# institucion, proyecto, reporte/informe, revista.
             try:
                 o = klass('temp')
-                if ICVBaseActivity.providedBy(o):
+                if ICVIndividualAct.providedBy(o) or ICVPublication.providedBy(o):
                     title = portal_types[klass.meta_type].title
                     items.append(SimpleTerm(klass.meta_type, title))
+                # if ICVBaseActivity.providedBy(o):
+                #     title = portal_types[klass.meta_type].title
+                #     items.append(SimpleTerm(klass.meta_type, title))
             except AttributeError:
                 pass
         return SimpleVocabulary(items)

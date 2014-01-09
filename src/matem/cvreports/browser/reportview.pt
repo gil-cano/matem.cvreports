@@ -25,10 +25,17 @@
 					tal:define="formfields view/formfields">
 
                     
-		<form method="post" 
+<!-- 		<form method="post" 
 		  tal:attributes="action string:${here/absolute_url}/${template/getId}">
 
-      <input type="hidden" name="form.submitted:boolean" value="True" />
+ -->
+
+        <form method="post" 
+          tal:attributes="action string:${here/absolute_url}">
+
+
+
+       <input type="hidden" name="form.submitted:boolean" value="True" />
 
       <div class="field">
         <label>Sede</label><br>
