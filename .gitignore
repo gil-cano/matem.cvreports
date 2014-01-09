@@ -1,6 +1,7 @@
 # byte-compiled Python files
 *.py[co]
 
+*.egg-info
 
 # Packages
 bin
