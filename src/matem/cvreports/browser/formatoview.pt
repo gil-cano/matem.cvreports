@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+<body>
+    <div metal:fill-slot="main">
+        <tal:main-macro metal:define-macro="main">
+            <h1>
+            <center i18n:translate="titulo_formato">Vista con Formato </center>
+            </h1>
+
+            <tal:block define="cuantos view/archivos">
+                <div class="discreet" i18n:translate="no_archivos_encontrados"
+                    tal:condition="not: cuantos">
+                    No se encontraron archivos para mostrar
+                </div>
+                <p i18n:translate="archivos_encontrados" tal:condition="cuantos">
+                    Se encontraron <span tal:content="cuantos" /> archivos 
+                </p>
+            </tal:block>
+            
+            <span tal:repeat="diccionario view/datos">
+            <ul tal:define="etiquetas diccionario/keys">
+                <li>
+                <tal:block tal:condition="python:'path' in diccionario">
+                    <a tal:attributes="href diccionario/path">
+                    <I><span tal:content="diccionario/title"/></I> </a> <br/>
+                </tal:block> 
+
+                <tal:block tal:condition="python:'getAuthors' in diccionario">
+                    	<b tal:content="diccionario/getAuthors"> Autores </b> 
+                </tal:block>
+
+                <div tal:repeat="etiqueta etiquetas">
+        
+                    <tal:block tal:condition="python:(etiqueta != 'path') and (etiqueta != 'title') and (etiqueta != 'Title')">
+                    <tal:block tal:content="diccionario/?etiqueta">Lo demas</tal:block> <br/>
+                    </tal:block>
+                </div>
+                </li>
+            </ul>
+            </span>
+        </tal:main-macro>
+    </div>
+</body>
+</html>
+

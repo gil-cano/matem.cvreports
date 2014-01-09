@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+  <body>
+    <div metal:fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+        <h1>
+	  <center i18n:translate="titulo_tabla">Vista en forma de tabla </center>
+ 	</h1>
+	<tal:block define="diccionario view/table">
+          <table class="listing" id="report-table">
+            <thead>
+              <tr>
+                <tal:block tal:repeat="columna python:diccionario['header']">
+                  <th tal:content="columna">Nombre columna</th>
+                </tal:block>
+              </tr>
+            </thead>
+            <tbody>
+              <tr tal:repeat="renglon python:diccionario['data']"> 
+                <tal:block tal:repeat="valor renglon">
+		  <tal:block tal:condition="repeat/valor/start">
+		    <td><a tal:attributes="href python: valor[1]"><span tal:content="python: valor[0]"/></a></td>
+		  </tal:block>
+		  <tal:block tal:condition="not: repeat/valor/start">
+                    <td tal:content="structure valor"> Valor (renglon,columna) </td>
+		  </tal:block>		  
+                </tal:block>
+              </tr>
+            </tbody>
+          </table>
+	</tal:block> 
+      </tal:main-macro>
+    </div>
+  </body>
+</html>

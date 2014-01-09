@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+<body>
+  <div metal:fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+		    tal:define="results view/persona">
+      <h1 i18n:translate="lineas"> Elige l&iacute;neas </h1>
+      <span tal:condition="results" 
+	    tal:repeat="linea results" 
+	    tal:content="linea">La linea </span><br/>
+    </tal:main-macro>
+  </div>
+</body>
+</html>

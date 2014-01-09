@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+  <body>
+    <div metal:fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+        <h1>
+	  <center i18n:translate="titulo_lista">Vista r&aacute;pida del reporte </center>
+ 	</h1>
+	<!--	<tal:block define="info view/form">
+		<tal:block define="cuantos python:len(info)"> -->
+
+	<tal:block define="cuantos view/archivos">
+	  <p class="discreet" i18n:translate="no_archivos_encontrados"
+	     tal:condition="not: cuantos"> No se encontraron archivos para mostrar
+	  </p>
+	  <p i18n:translate="archivos_encontrados" tal:condition="cuantos"> Se encontraron <span tal:content="cuantos" /> archivos 
+	  </p>
+	</tal:block>
+	<span tal:repeat="diccionario view/form">
+	  <tal:block tal:define="etiquetas diccionario/keys">
+	    <tal:block tal:condition="python:'path' in diccionario">
+	      <b> T&iacute;tulo </b><br/>
+	      <a tal:attributes="href python:diccionario['path']">
+		<I><span tal:content="python:diccionario['title']"/></I> </a> <br/>
+	    </tal:block> 
+	    <tal:block tal:condition="python:not ('path' in diccionario)">
+		<b> T&iacute;tulo </b><br/>
+	      <I><span tal:content="python:diccionario['title']"/></I><br/>
+	    </tal:block> 
+	    <span tal:repeat="etiqueta etiquetas">
+	      <tal:block tal:condition="python:etiqueta == 'autores'">
+                <b> Autores </b><br/>
+		<b tal:content="diccionario/?etiqueta"> Autores </b> <br/>
+	      </tal:block>  
+	      <tal:block tal:condition="python:(etiqueta != 'path') and (etiqueta != 'title') and (etiqueta != 'autores')">
+		<b tal:content="etiqueta">La etiqueta</b> <br/>
+		<span tal:content="diccionario/?etiqueta">dmm</span> <br/>
+	      </tal:block>
+	    </span>
+	  </tal:block>
+	  <hr/>
+	</span>
+      </tal:main-macro>
+    </div>
+  </body>
+</html>

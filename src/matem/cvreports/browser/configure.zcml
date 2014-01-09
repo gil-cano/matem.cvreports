@@ -1,0 +1,87 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="matem.cvreports">
+
+  <include package="plone.app.contentmenu" />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="report_view"
+      class=".reportview.ReportView"
+      allowed_interface=".reportview.IReportView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="tabular_view"
+      class=".reportview.ReportView"
+      allowed_interface=".reportview.IReportView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="estadistica_view"
+      class=".formatoview.ReportView"
+      template="estadisticaview.pt"
+      allowed_interface=".formatoview.IReportView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="lista_view"
+      class=".listaview.ReportView"
+      template="listaview.pt"
+      allowed_interface=".listaview.IReportView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="formato_view"
+      class=".formatoview.ReportView"
+      template="formatoview.pt"
+      allowed_interface=".formatoview.IReportView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="tabla_view"
+      class=".formatoview.ReportView"
+      template="tablaview.pt"
+      allowed_interface=".formatoview.IReportView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="plan_view"
+      class=".planview.ReportView"
+      template="planview.pt"
+      allowed_interface=".planview.IReportView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+     for="matem.cvreports.interfaces.cvreport.ICVReport"
+     name="plantexto_view"
+     class=".plantextoview.ReportView"
+     template="plantextoview.pt"
+     allowed_interface=".plantextoview.IReportView"
+     permission="zope.Public"
+     />
+
+  <browser:page
+      for="matem.cvreports.interfaces.cvreport.ICVReport"
+      name="datos_plan_view"
+      class=".datosplanview.ReportView"
+      template="datosplanview.pt"
+      allowed_interface=".datosplanview.IReportView"
+      permission="zope.Public"
+      />
+
+</configure>

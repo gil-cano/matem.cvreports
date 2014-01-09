@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+<body>
+  <div metal:fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="resultadoconsultaview view/statistic">
+      <h1>
+	<center i18n:translate="titulo_estadisticas">Resumen Estad&iacute;stico </center>
+      </h1>
+      <p class="discreet" i18n:translate="no_archivos_encontrados"
+	 tal:condition="not: resultadoconsultaview"> No se encontraron archivos para mostrar
+      </p>
+      <p i18n:translate="archivos_encontrados" tal:condition="resultadoconsultaview">
+          Se encontraron <span tal:content="view/archivos" /> archivos 
+      </p>
+      <div tal:repeat="etiqueta resultadoconsultaview/keys">
+	    <span tal:content="etiqueta">La etiqueta</span>
+        <span tal:content="resultadoconsultaview/?etiqueta">Valor</span>
+      </div>
+    </tal:main-macro>
+  </div>
+</body>
+</html>

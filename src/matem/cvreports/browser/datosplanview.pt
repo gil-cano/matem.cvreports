@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+  <body>
+    <div metal:fill-slot="main">
+      <tal:main-macro metal:define-macro="main" 
+		      tal:define="formfields view/form">
+	<form method="post" tal:attributes="action 
+					    string:${here/absolute_url}/${template/getId}">
+          <fieldset id="fieldset-default" class="formPanel">
+	    <fieldset id="fieldset-default" class="formPanel">
+	      <label class="formQuestion">A&ntilde;o</label>
+	      <div class="formControls">                     
+		<select name="year">
+		  <tal:block tal:repeat="year view/years">
+		    <option tal:attributes="value year"
+			    tal:content="year"/>
+                  </tal:block>
+		</select>
+	      </div>
+	      <label class="formQuestion">Investigador</label>
+	      <div class="formControls">                     
+		<select name="id">
+		  <tal:block tal:repeat="investigador view/personas">
+		    <option tal:attributes="value python:investigador[0]"
+			    tal:content="python: investigador[1]"/>
+                  </tal:block>
+		</select>
+	      </div>
+
+	    </fieldset>
+	    <div class="formControls">
+	      <input class="context" type="submit" value="Buscar" 
+                     name="plantexto_view:action"/>
+	    </div>    
+	</form>	
+      </tal:main-macro>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+return 'formato_view'

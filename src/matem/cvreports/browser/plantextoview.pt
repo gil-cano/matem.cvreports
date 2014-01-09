@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <head><title></title></head>
+
+  <body>
+    <metal:fill fill-slot="main">
+      <metal:main_macro define-macro="main">
+	<tal:block tal:define="diccionario view/proyectos;investigadores diccionario/keys">
+	  <tal:block tal:repeat="investigador investigadores">
+	    <h1> Plan de trabajo del investigador <I tal:content="diccionario/?investigador/nombreInvestigador"/></h1>	    
+	    <tal:block tal:repeat="proyecto diccionario/?investigador/proyectos">
+	      Trabajar como <span tal:condition="python: proyecto['participacion'] != 'None'"/>
+	      <span tal:content="proyecto/participacion"/> en un proyecto de
+	      <span tal:content="proyecto/tipo"/> llamado <a tal:attributes="href python: proyecto['proyectoUrl']">
+		<span tal:content="proyecto/titulo"/>
+	      </a>
+
+	      <span tal:condition="proyecto/lineas"> dentro de las l&iacute;neas de investigaci&oacute;n:
+		<ul>
+		  <div tal:repeat="linea proyecto/lineas">
+		    <li> <span tal:content="linea/title"/> </li>
+		  </div>
+		</ul>
+	      </span>
+
+	      <div tal:condition="proyecto/tieneColaboradores"> En colaboraci&oacute;n con:
+		<ul>
+ 		  <span tal:condition="proyecto/tieneColaboradoresInternos"
+			tal:repeat="persona proyecto/colaboradoresInternos">
+		    <li><a tal:attributes="href python: persona.absolute_url()"><span tal:content="persona/Title"/></a></li>
+		  </span>
+		  <span tal:condition="proyecto/tieneColaboradoresExternos">
+		    <div tal:repeat="persona proyecto/colaboradoresExternos">
+		      <li><span tal:content="python: persona['name'] + ' ' + persona['patern']"/> - <i tal:content="persona/institution"/>
+		      </li>
+		    </div>
+		  </span>
+		</ul>
+	      </div>
+	      <tal:block tal:condition="proyecto/tienePatrocinador">Este proyecto es patrocinado por <i tal:content="proyecto/patrocinador"/>.</tal:block>
+	      <tal:block tal:condition="proyecto/tieneObjetivo"><br/><b>Objetivo:</b> <span tal:content="proyecto/objetivo"/></tal:block>
+	      <hr/>
+	    </tal:block>
+	  </tal:block>
+	</tal:block>
+      </metal:main_macro>
+    </metal:fill>
+  </body>
+</html>
+

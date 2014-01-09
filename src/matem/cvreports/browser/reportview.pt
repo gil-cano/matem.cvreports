@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+
+<metal:js fill-slot="javascript_head_slot">
+  <!-- <script type="text/javascript" src="combos.js"></script> -->
+  <script type="text/javascript">
+  	jq(document).ready(function() {
+  		jq('.datepicker').datepicker({
+  			changeMonth: true,
+  			changeYear: true,
+			minDate: new Date(1950, 1 - 1, 1),
+			maxDate: '+2Y'
+  		});
+  	});
+  	</script>
+</metal:js>
+
+
+<body>
+	<div metal:fill-slot="main">
+	<tal:main-macro metal:define-macro="main" 
+					tal:define="formfields view/formfields">
+
+                    
+		<form method="post" 
+		  tal:attributes="action string:${here/absolute_url}/${template/getId}">
+
+      <input type="hidden" name="form.submitted:boolean" value="True" />
+
+      <div class="field">
+        <label>Sede</label><br>
+        <select multiple="multiple" seize="5" name="sede" id="sede">
+          <option value="df">D.F.</option>
+          <option value="matcuer">Cuernavaca</option>
+          <option value="matmor">Morelia</option>
+        </select>
+      </div>
+
+			<fieldset id="fieldset-default" class="formPanel">
+				<div class="field" tal:repeat="field formfields"  >
+
+					<label class="formQuestion"
+						tal:attributes="for field/index"
+						tal:content="field/title"> Nombre del campo </label> <br>
+						
+					<tal:block tal:condition="python:field['type'] == 'text'">
+						<input size="50" tal:attributes="type field/type; 
+											name field/index"/>
+					</tal:block>
+					
+					<tal:block tal:condition="python:field['type'] == 'datepicker'">
+						Entre
+						<input type="text" size="15"
+							tal:attributes="name string:from_${field/index};
+							                class field/type"/> y
+						<input type="text" size="15"
+							tal:attributes="name string:to_${field/index};
+							                class field/type"/>
+					</tal:block>
+
+					<tal:block tal:condition="python:field['type'] == 'select'">
+						<select size="4" multiple="multiple"
+								tal:attributes="name string:${field/index}">
+						<tal:block tal:repeat="pair field/vocabulary">
+							<option tal:attributes="value python:pair[0]"
+									tal:content="python:pair[1]"/>
+						</tal:block>
+						</select>
+					</tal:block>
+
+				</div>
+			</fieldset>
+			<div class="formControls">
+			  <input class="context" type="submit" value="Vista con formato" name="form.button.formato"/>
+			  <input class="context" type="submit" value="Consulta en tabla" name="form.button.tabular"/>
+			</div>
+
+		</form>	
+    </tal:main-macro>
+    </div>
+</body>
+</html>

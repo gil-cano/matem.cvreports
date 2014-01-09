@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="matem.cvreports">
+
+<body>
+
+<div metal:fill-slot="main">
+  <tal:main-macro metal:define-macro="main"
+      tal:define="results view/getMatchedItems">
+
+    <h1 class="documentFirstHeading"> Resultados de la busqueda </h1>
+
+    <tal:block tal:condition="results">
+
+      <table class="listing" id="report-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th tal:repeat="ct view/getColumnTitles" tal:content="ct">Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr tal:repeat="row results">
+            <td style="text-align: center" tal:content="repeat/row/number" />
+            <tal:block tal:repeat="cell python:row[1]">
+              <td tal:condition="repeat/cell/start">
+                <a tal:attributes="href python:row[0]"><span tal:content="cell"/></a>
+              </td>
+              <td tal:condition="not: repeat/cell/start"
+                  tal:content="structure cell" />
+            </tal:block>
+          </tr>
+        </tbody>
+      </table>
+
+    </tal:block>
+
+  </tal:main-macro>
+</div>
+
+</body>
+
+</html>
