@@ -15,10 +15,10 @@ from types import ListType
 
 COLUMNS = {
     'CVArticle': ['title', 'publicationType', 'magazineRef', 'factor', 'othermagazine',
-                  'number',
+                  'number','article_status', 'articleType',
                   'colproceedingtitle', 'editor', 'authors', 'isnational',
                   'pages', 'isbn', 'volume', 'relatedProjects', 'sede'],
-    'CVBook': ['booktype', 'title', 'authors', 'country', 'city', 'publisher',
+    'CVBook': ['booktype', 'title', 'authors', 'book_status', 'country', 'city', 'publisher',
                 'edition', 'publication_date', 'pages', 'collection', 'serie',
                 'volume', 'isbn', 'relatedProjects', 'sede'],
     'CVBookChapter': ['bookTitle', 'title', 'editor', 'authors', 'country',
@@ -31,10 +31,10 @@ COLUMNS = {
     'CVEventOrg': ['title', 'event_date', 'numberOfDays', 'institutions',
                    'nationalSpeakers', 'foreignSpeakers', 'assistants',
                    'eventType', 'instituteParticipation', 'creators', 'sede'],
-    'CVConference': ['title', 'modality', 'meetingName', 'event_date',
-                     'institutionCountry', 'city', 'assist', 'creators', 'sede'],
-    'CVConferencePlus': ['title', 'meetingName', 'event_date',
-                         'institutionCountry', 'city', 'creators', 'sede'],
+    'CVConference': ['title', 'modality', 'meetingName', 'event_date', 'conftype',
+                     'institutionCountry', 'city', 'assist', 'creators', 'sede', 'eventNotes'],
+    'CVConferencePlus': ['title', 'meetingName', 'event_date', 'conftype',
+                         'institutionCountry', 'city', 'creators', 'sede', 'eventNotes'],
     'CVAward': ['title', 'creators', 'institutionCountry', 'institution',
                 'otherinstitution', 'isnational', 'sede'],
     'CVGuest': ['title', 'institutionCountry', 'institution',
@@ -200,7 +200,13 @@ class ReportView(BrowserView):
 
         objs = self.matchContent(form, self.atype, sede)
         data = []
-        vocabulary_fields = ['publicationType', 'isnational', 'modality', 'assist', 'eventType', 'instituteParticipation', 'thesisType', 'status_thesis', 'level', 'coursetype', 'booktype', 'proceedingtype', 'proceeding_status']
+        vocabulary_fields = [
+            'publicationType',
+            'article_status',
+            'articleType',
+            'conftype',
+            'book_status',
+            'isnational', 'modality', 'assist', 'eventType', 'instituteParticipation', 'thesisType', 'status_thesis', 'level', 'coursetype', 'booktype', 'proceedingtype', 'proceeding_status']
         for obj in objs:
             # try:
             #     magazine = obj.getMagazineRef().getIsIndexed()
@@ -328,7 +334,6 @@ class ReportView(BrowserView):
     def usersBySede(self, ids):
         brains = self.portal_catalog(portal_type='FSDPerson', id=ids)
         users ={'df': [], 'matcuer': [], 'matjuriquilla': []}
-        import pdb; pdb.set_trace( )
         for brain in brains:
             if 'CU' in brain.getClassificationNames:
                 users['df'].append(brain.id)
