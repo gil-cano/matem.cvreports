@@ -198,6 +198,7 @@ class ReportView(BrowserView):
 
         objs = self.matchContent(form, self.atype, sede)
         data = []
+        vocabulary_fields = ['publicationType', 'isnational', 'modality', 'assist', 'eventType', 'instituteParticipation', 'thesisType', 'status_thesis', 'level', 'coursetype', 'booktype']
         for obj in objs:
             # try:
             #     magazine = obj.getMagazineRef().getIsIndexed()
@@ -253,14 +254,19 @@ class ReportView(BrowserView):
                          names.append(' '.join([d['firstname'], d['lastname1'], d['lastname2']]))
                     row.append(','.join(names))
                 elif i == 'sede':
-                    ids = [j for j in obj.getField('creators').get(obj)]
-                    brains = self.portal_catalog(portal_type='FSDPerson', id=ids)
+                    try:
+                        return obj.sede
+                    except Exception:
+                        pass
+                    ownerid = obj.aq_parent.aq_parent.id
+                    # ids = [j for j in obj.getField('creators').get(obj)]
+                    brains = self.portal_catalog(portal_type='FSDPerson', id=ownerid)
                     if brains:
                         row.append(brains[0].getObject().sede)
                     else:
                         row.append('')
 
-                elif i =='publicationType' or i =='isnational' or i =='modality' or i=='assist':
+                elif i in vocabulary_fields:
                     value = obj.getField(i).Vocabulary().getValue(obj.getField(i).get(obj))
                     row.append(value)
                 else:
@@ -283,6 +289,8 @@ class ReportView(BrowserView):
         # get items to search in
         brains = []
         # gil = 1
+
+        
         for id in ids:
             query = {'portal_type': atype,
                      'path': {'query': '/'.join(folder[id].getPhysicalPath())}}
