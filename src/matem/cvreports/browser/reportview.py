@@ -269,6 +269,11 @@ class ReportView(BrowserView):
                 elif i in vocabulary_fields:
                     value = obj.getField(i).Vocabulary().getValue(obj.getField(i).get(obj))
                     row.append(value)
+
+                elif i == 'country':
+                    value = obj.getCountriesVocabulary().getValue(obj.getField(i).get(obj))
+                    row.append(value)
+
                 else:
                     row.append(obj.getField(i).get(obj))
             data.append((obj.absolute_url(), row))
@@ -320,10 +325,11 @@ class ReportView(BrowserView):
         brains = self.portal_catalog(portal_type='FSDPerson', id=ids)
         users ={'df': [], 'matcuer': [], 'matjuriquilla': []}
         for brain in brains:
-            if 'C.U.' in brain.getClassificationNames:
+            if 'CU' in brain.getClassificationNames:
                 users['df'].append(brain.id)
             elif 'Cuernavaca' in brain.getClassificationNames:
                 users['matcuer'].append(brain.id)
             elif 'Juriquilla' in brain.getClassificationNames:
                 users['matjuriquilla'].append(brain.id)
+                
         return users
