@@ -61,6 +61,8 @@ COLUMNS = {
     'CVReport': ['title', 'authors', 'reportType', 'pages',
                  'publication_date', 'creators'],
     'CVEditorialCom': ['title', 'description', 'commtype', 'begin_date', 'end_date', 'creators'],
+    'CVProceeding': ['title','authors', 'proceedingtype', 'proceeding_status'],
+
 }
 
 
@@ -198,7 +200,7 @@ class ReportView(BrowserView):
 
         objs = self.matchContent(form, self.atype, sede)
         data = []
-        vocabulary_fields = ['publicationType', 'isnational', 'modality', 'assist', 'eventType', 'instituteParticipation', 'thesisType', 'status_thesis', 'level', 'coursetype', 'booktype']
+        vocabulary_fields = ['publicationType', 'isnational', 'modality', 'assist', 'eventType', 'instituteParticipation', 'thesisType', 'status_thesis', 'level', 'coursetype', 'booktype', 'proceedingtype', 'proceeding_status']
         for obj in objs:
             # try:
             #     magazine = obj.getMagazineRef().getIsIndexed()
@@ -217,10 +219,12 @@ class ReportView(BrowserView):
                 elif i == 'publication_date':
                     row.append(obj.getField(i).get(obj).get('Year', None))
                 elif i == 'creators':
-                    ids = [j for j in obj.getField(i).get(obj)]
-                    brains = self.portal_catalog(portal_type='FSDPerson', id=ids)
-                    names = [j.Title for j in brains]
-                    row.append(', '.join(names))
+                    ownerid = obj.aq_parent.aq_parent.id
+                    #ids = [j for j in obj.getField(i).get(obj)]
+                    brains = self.portal_catalog(portal_type='FSDPerson', id=ownerid)
+                    #names = [j.Title for j in brains]
+                    #row.append(', '.join(names))
+                    row.append(brains[0].Title)
                 elif i == 'magazineRef':
                     reference = ''
                     if obj.getField(i).get(obj):
@@ -295,7 +299,7 @@ class ReportView(BrowserView):
         brains = []
         # gil = 1
 
-        
+
         for id in ids:
             query = {'portal_type': atype,
                      'path': {'query': '/'.join(folder[id].getPhysicalPath())}}
@@ -324,6 +328,7 @@ class ReportView(BrowserView):
     def usersBySede(self, ids):
         brains = self.portal_catalog(portal_type='FSDPerson', id=ids)
         users ={'df': [], 'matcuer': [], 'matjuriquilla': []}
+        import pdb; pdb.set_trace( )
         for brain in brains:
             if 'CU' in brain.getClassificationNames:
                 users['df'].append(brain.id)
@@ -331,5 +336,5 @@ class ReportView(BrowserView):
                 users['matcuer'].append(brain.id)
             elif 'Juriquilla' in brain.getClassificationNames:
                 users['matjuriquilla'].append(brain.id)
-                
+
         return users
