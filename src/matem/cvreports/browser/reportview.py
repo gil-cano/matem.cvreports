@@ -116,6 +116,9 @@ class ReportView(BrowserView):
         """
         content = self.context.getCvcontent()
         types = atapi.listTypes('UNAM.imateCVct')
+
+        fields_names =['article_status', 'articleType', 'conftype', 'book_status','status_thesis']
+
         # klasses = [atype['klass'] for atype in types]
         klasses = [t['klass'] for t in types if t['klass'].meta_type == content]
         if not klasses:
@@ -131,6 +134,19 @@ class ReportView(BrowserView):
                 item['type'] = 'select'
                 fields.append(item)
                 continue
+
+            if field.getName() in fields_names:
+                item['vocabulary'] = field.Vocabulary().items()
+                item['type'] = 'select'
+                fields.append(item)
+                continue
+
+            #elif isinstance(field.Vocabulary(), DisplayList):
+            #     item['vocabulary'] = field.Vocabulary().items()
+            #     item['type'] = 'select'
+            #     fields.append(item)
+            #     continue
+
         return fields
             # if isinstance(field.widget, DateFreeWidget):
             #     item['type'] = 'datepicker'
@@ -206,7 +222,18 @@ class ReportView(BrowserView):
             'articleType',
             'conftype',
             'book_status',
-            'isnational', 'modality', 'assist', 'eventType', 'instituteParticipation', 'thesisType', 'status_thesis', 'level', 'coursetype', 'booktype', 'proceedingtype', 'proceeding_status']
+            'isnational', 
+            'modality', 
+            'assist', 
+            'eventType', 
+            'instituteParticipation', 
+            'thesisType', 
+            'status_thesis', 
+            'level', 
+            'coursetype', 
+            'booktype', 
+            'proceedingtype', 
+            'proceeding_status']
         for obj in objs:
             # try:
             #     magazine = obj.getMagazineRef().getIsIndexed()
