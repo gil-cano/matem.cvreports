@@ -50,8 +50,8 @@ COLUMNS = {
     'CVThesis': ['title', 'thesisType', 'authorThesis', 'status_thesis',
                  'graduation_date', 'level', 'creators', 'institution',
                  'otherinstitution', 'sede'],
-    'CVEvent': ['title', 'creators', 'audienceType', 'sede', 'where',
-                'institutionCountry', 'country', 'conference'],
+    'CVEvent': ['title', 'creators', 'audienceType', 'where',
+                'institutionCountry', 'country', 'city', 'conference', 'sede'],
     'CVQualification': ['title', 'qualificationForm', 'grade', 'creators'],
     'CVStudieProgram': ['title', 'level', 'otherLevel', 'institution',
                         'begin_date', 'end_date', 'otherinstitution',
@@ -64,7 +64,6 @@ COLUMNS = {
     'CVProceeding': ['title','authors', 'proceedingtype', 'proceeding_status'],
 
 }
-
 
 class IReportView(Interface):
     """
@@ -233,7 +232,9 @@ class ReportView(BrowserView):
             'coursetype',
             'booktype',
             'proceedingtype',
-            'proceeding_status']
+            'proceeding_status',
+            'audienceType',
+            'where']
         for obj in objs:
             # try:
             #     magazine = obj.getMagazineRef().getIsIndexed()
