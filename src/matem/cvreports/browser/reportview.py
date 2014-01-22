@@ -203,7 +203,7 @@ class ReportView(BrowserView):
                 sede = [sede]
         except:
             # if no sede selected all must be reported
-            sede = ['df', 'matcuer', 'matjuriquilla']
+            sede = ['C.U.', 'Cuernavaca', 'Juriquilla']
 
         # esta no es la mejor manera de agregar el reporte de revistas
         # debemos encontrar una mejor manera de hacerlo
@@ -361,13 +361,13 @@ class ReportView(BrowserView):
     #('C.U.', 'Cuernavaca', 'Juriquilla', 'Morelia'),
     def usersBySede(self, ids):
         brains = self.portal_catalog(portal_type='FSDPerson', id=ids)
-        users ={'df': [], 'matcuer': [], 'matjuriquilla': []}
+        users ={'C.U.': [], 'Cuernavaca': [], 'Juriquilla': []}
         for brain in brains:
             if 'CU' in brain.getClassificationNames:
-                users['df'].append(brain.id)
+                users['C.U.'].append(brain.id)
             elif 'Cuernavaca' in brain.getClassificationNames:
-                users['matcuer'].append(brain.id)
+                users['Cuernavaca'].append(brain.id)
             elif 'Juriquilla' in brain.getClassificationNames:
-                users['matjuriquilla'].append(brain.id)
+                users['Juriquilla'].append(brain.id)
 
         return users

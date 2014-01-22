@@ -40,9 +40,9 @@
       <div class="field">
         <label>Sede</label><br>
         <select multiple="multiple" seize="5" name="sede" id="sede">
-          <option value="df">C.U.</option>
-          <option value="matcuer">Cuernavaca</option>
-          <option value="matjuriquilla">Juriquilla</option>
+          <option value="C.U.">C.U.</option>
+          <option value="Cuernavaca">Cuernavaca</option>
+          <option value="Juriquilla">Juriquilla</option>
         </select>
       </div>
 
