@@ -43,6 +43,7 @@
           <option value="C.U.">C.U.</option>
           <option value="Cuernavaca">Cuernavaca</option>
           <option value="Juriquilla">Juriquilla</option>
+          <option value="Oaxaca">Oaxaca</option>
         </select>
       </div>
 
